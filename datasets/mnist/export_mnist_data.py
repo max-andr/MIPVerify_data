@@ -1,35 +1,17 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+"""
+Verified to work with Tensorflow 1.9
+"""
 
-import argparse
-
-import scipy.io as sio
 import tensorflow as tf
-from tensorflow.examples.tutorials.mnist import input_data
+from tensorflow.keras.datasets import mnist 
 import numpy as np
+import scipy.io as sio
 
-"""
-Exports the MNIST test set, with the images resized from 784 to 28*28*1
-"""
-mnist = input_data.read_data_sets('/tmp/data', one_hot=False)
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-# None indicates that the first dimension, corresponding to the batch size, can be of any size.
-x = tf.placeholder(tf.float32, [None, 784], name='original_image')
+# pad final dimension of dataset and normalize to between 0 and 1
+x_train_f = np.expand_dims(x_train, 3)/255
+x_test_f = np.expand_dims(x_test, 3)/255
 
-# With tf.reshape, size of dimension with special value -1 computed so total size remains constant.
-x_image = tf.reshape(x, [-1,28,28,1], name='flattened_image')
-
-with tf.Session() as sess:
-    sess.run(tf.global_variables_initializer())
-    sio.savemat('mnist_test.mat', {
-        'images': sess.run(x_image, feed_dict={x: mnist.test.images}), 
-        'labels': np.ndarray.tolist(mnist.test.labels)
-        })
-        
-    sio.savemat('mnist_train.mat', {
-        'images': sess.run(x_image, feed_dict={x: mnist.train.images}), 
-        'labels': np.ndarray.tolist(mnist.train.labels)
-        })
-
-tf.app.run()
+sio.savemat('mnist_train.mat', {'images': x_train_f, 'labels': y_train})
+sio.savemat('mnist_test.mat', {'images': x_test_f, 'labels': y_test})
