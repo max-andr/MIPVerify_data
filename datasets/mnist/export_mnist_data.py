@@ -13,5 +13,5 @@ import scipy.io as sio
 x_train_f = np.expand_dims(x_train, 3)
 x_test_f = np.expand_dims(x_test, 3)
 
-sio.savemat('mnist_train.mat', {'images': x_train_f, 'labels': y_train})
-sio.savemat('mnist_test.mat', {'images': x_test_f, 'labels': y_test})
+sio.savemat('mnist_int_train.mat', {'images': x_train_f, 'labels': y_train})
+sio.savemat('mnist_int_test.mat', {'images': x_test_f, 'labels': y_test})
