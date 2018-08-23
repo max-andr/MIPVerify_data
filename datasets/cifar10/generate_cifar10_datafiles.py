@@ -1,5 +1,10 @@
 """
 Verified to work with Tensorflow 1.9
+
+For CIFAR10, writes two seperate `.mat` files containing the training and
+test set respectively.
+
+Pixel values are stored as uint8s (0-255); labels are zero-indexed.
 """
 
 import tensorflow as tf
