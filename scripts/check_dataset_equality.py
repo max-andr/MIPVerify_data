@@ -2,6 +2,15 @@ import numpy as np
 import scipy.io as sio
 import argparse
 
+"""
+Script containing helper functions to check that two datasets are equal to
+within the allowable tolerance. 
+
+Used for when we generate the same dataset via different code and want to
+check that the resulting dataset is the same. (Potentially could be 
+written as a test.)
+"""
+
 def assert_shape(name, a1, a2):
     s1 = np.shape(a1)
     s2 = np.shape(a2)
